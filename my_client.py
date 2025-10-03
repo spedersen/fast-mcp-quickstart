@@ -6,6 +6,7 @@ key and uses it to authenticate requests to the server.
 """
 import asyncio
 import time
+
 import jwt  # type: ignore
 from fastmcp import Client  # type: ignore
 
