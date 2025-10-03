@@ -4,11 +4,12 @@ This server uses the FastMCP library to create an MCP server with JWT-based
 authentication. It automatically generates RSA key pairs for development if
 they don't exist, and provides a simple 'greet' tool for demonstration purposes.
 """
-from fastmcp import FastMCP  # type: ignore
-from fastmcp.server.auth.providers.jwt import JWTVerifier  # type: ignore
+import os
+
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
-import os
+from fastmcp import FastMCP  # type: ignore
+from fastmcp.server.auth.providers.jwt import JWTVerifier  # type: ignore
 
 # For development, generate RSA key pair
 # In production, use proper OAuth provider
@@ -51,6 +52,7 @@ mcp = FastMCP("My MCP Server", auth=auth)
 
 @mcp.tool
 def greet(name: str) -> str:
+    """Greet a person by name."""
     return f"Hello, {name}!"
 
 if __name__ == "__main__":

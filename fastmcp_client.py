@@ -5,9 +5,9 @@ how to list available tools, resources, and prompts, as well as execute tool cal
 It uses RSA key-based authentication to secure the connection.
 """
 import asyncio
-import jwt
 import time
-from fastmcp import Client, FastMCP
+import jwt  # type: ignore
+from fastmcp import Client  # type: ignore
 
 # Load private key to generate JWT token
 with open("./keys/private.pem", "rb") as f:
@@ -24,6 +24,7 @@ token = jwt.encode(payload, private_key, algorithm="RS256")
 client = Client("http://localhost:8000/mcp", auth=token)
 
 async def main():
+    """Connect to MCP server and demonstrate available operations."""
     async with client:
         # Ensure client can connect
         await client.ping()
