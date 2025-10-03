@@ -6,6 +6,7 @@ It uses RSA key-based authentication to secure the connection.
 """
 import asyncio
 import time
+
 import jwt  # type: ignore
 from fastmcp import Client  # type: ignore
 
