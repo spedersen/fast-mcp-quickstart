@@ -10,3 +10,8 @@ dependencies = [
     "pyjwt[crypto]>=2.8.0",
     "cryptography>=41.0.0",
 ]
+
+[dependency-groups]
+dev = [
+    "pylint>=3.0.0",
+]
