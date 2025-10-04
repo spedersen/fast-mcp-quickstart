@@ -20,9 +20,9 @@ payload = {
     "exp": int(time.time()) + 3600,  # expires in 1 hour
 }
 
-token = jwt.encode(payload, private_key, algorithm="RS256")
+TOKEN = jwt.encode(payload, private_key, algorithm="RS256") # type: ignore # pylint: disable=no-member
 
-client = Client("http://localhost:8000/mcp", auth=token)
+client = Client("http://localhost:8000/mcp", auth=TOKEN)
 
 async def main():
     """Connect to MCP server and demonstrate available operations."""
