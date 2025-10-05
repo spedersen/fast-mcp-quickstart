@@ -4,15 +4,21 @@ This client connects to an MCP server using JWT authentication and demonstrates
 how to list available tools, resources, and prompts, as well as execute tool calls.
 It uses RSA key-based authentication to secure the connection.
 """
+
 import asyncio
+import os
 import time
 
-import jwt  # type: ignore
-from fastmcp import Client  # type: ignore
+import jwt
+from fastmcp import Client
 
-# Load private key to generate JWT token
-with open("./keys/private.pem", "rb") as f:
-    private_key = f.read()
+# Load private key from environment variable or file
+PRIVATE_KEY_PEM = os.getenv("PRIVATE_KEY_PEM")
+if PRIVATE_KEY_PEM:
+    private_key = PRIVATE_KEY_PEM.encode()
+else:
+    with open("./private.pem", "rb") as f:
+        private_key = f.read()
 
 # Generate a JWT token for authentication
 payload = {
@@ -20,9 +26,12 @@ payload = {
     "exp": int(time.time()) + 3600,  # expires in 1 hour
 }
 
-TOKEN = jwt.encode(payload, private_key, algorithm="RS256") # type: ignore # pylint: disable=no-member
+TOKEN = jwt.encode(payload, private_key, algorithm="RS256")
 
-client = Client("http://localhost:8000/mcp", auth=TOKEN)
+# Use environment variable for endpoint, default to localhost
+MCP_ENDPOINT = os.getenv("MCP_ENDPOINT", "http://localhost:8000/mcp")
+client = Client(MCP_ENDPOINT, auth=TOKEN)
+
 
 async def main():
     """Connect to MCP server and demonstrate available operations."""
@@ -41,5 +50,6 @@ async def main():
         # Ex. execute a tool call
         result = await client.call_tool("greet", {"name": "World"})
         print(result)
+
 
 asyncio.run(main())
