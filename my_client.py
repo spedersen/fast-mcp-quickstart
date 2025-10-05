@@ -26,7 +26,7 @@ payload = {
     "exp": int(time.time()) + 3600,  # expires in 1 hour
 }
 
-TOKEN = jwt.encode(payload, private_key.decode(), algorithm="RS256")  # type: ignore # pylint: disable=no-member
+TOKEN = jwt.encode(payload, private_key.decode(), algorithm="RS256")
 
 # Use environment variable for endpoint, default to localhost
 MCP_ENDPOINT = os.getenv("MCP_ENDPOINT", "http://localhost:8000/mcp")
