@@ -18,8 +18,8 @@ PUBLIC_KEY_PEM = os.getenv("PUBLIC_KEY_PEM")
 PRIVATE_KEY_PEM = os.getenv("PRIVATE_KEY_PEM")
 
 if PUBLIC_KEY_PEM:
-    # Cloud deployment: use environment variables
-    public_key_data = PUBLIC_KEY_PEM.encode()
+    # Cloud deployment: use environment variables (already a string)
+    public_key_data = PUBLIC_KEY_PEM
 else:
     # Local development: use or generate file-based keys
     if not os.path.exists("private.pem") or not os.path.exists("public.pem"):
@@ -48,9 +48,9 @@ else:
 
     # Load public key from file
     with open("public.pem", "rb") as f:
-        public_key_data = f.read()
+        public_key_data = f.read().decode("utf-8")
 
-auth = JWTVerifier(public_key=public_key_data.decode("utf-8"), algorithm="RS256")
+auth = JWTVerifier(public_key=public_key_data, algorithm="RS256")
 mcp = FastMCP("My MCP Server", auth=auth)
 
 
