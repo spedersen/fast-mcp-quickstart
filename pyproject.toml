@@ -9,6 +9,7 @@ dependencies = [
     "fastmcp>=2.12.3",
     "pyjwt[crypto]>=2.8.0",
     "cryptography>=41.0.0",
+    "ruff>=0.13.3",
 ]
 
 [dependency-groups]
